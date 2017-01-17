@@ -18,14 +18,16 @@ import { WikipediaService } from './wikipedia.service';
 
 export class WikiSmartComponent {
 
-	constructor(private wikipedisService:WikipediaService){}
+	items:Observable<string[]>;
+
+	constructor(private wikipedisService:WikipediaService){
+		this.items = this.searchTermStream.debounceTime(300).distinctUntilChanged().switchMap((term:string)=>this.wikipedisService.search(term));
+	}
 
 	private searchTermStream = new Subject<string>();
 
 	search(term:string){
 		this.searchTermStream.next(term);
 	}
-
-	item:Observable<string[]> = this.searchTermStream.debounceTime(300).distinctUntilChanged().switchMap((term:string)=>this.wikipedisService.search(term));
 
 }

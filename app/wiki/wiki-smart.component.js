@@ -16,7 +16,7 @@ var WikiSmartComponent = (function () {
         var _this = this;
         this.wikipedisService = wikipedisService;
         this.searchTermStream = new subject_1.Subject();
-        this.item = this.searchTermStream.debounceTime(300).distinctUntilChanged().switchMap(function (term) { return _this.wikipedisService.search(term); });
+        this.items = this.searchTermStream.debounceTime(300).distinctUntilChanged().switchMap(function (term) { return _this.wikipedisService.search(term); });
     }
     WikiSmartComponent.prototype.search = function (term) {
         this.searchTermStream.next(term);
